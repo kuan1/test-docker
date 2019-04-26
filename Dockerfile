@@ -1,4 +1,4 @@
-FROM node:10.14.2-Alpine
+FROM node:10.14.2-alpine
 COPY . /app
 WORKDIR /app
 RUN npm install --registry=https://registry.npm.taobao.org
