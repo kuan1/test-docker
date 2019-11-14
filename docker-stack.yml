@@ -1,0 +1,28 @@
+version: "3.7"
+services:
+  nodeapp:
+    image: "nodeapp:latest"
+    networks:
+      - test
+    ports:
+      - "3000:3000"
+  nginx:
+    image: nginx:stable-alpine
+    depends_on:
+      - "nodeapp"
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/www:/etc/nginx/www
+      - ./nginx/root:/etc/nginx/root
+    networks:
+      - test
+    ports:
+      - "80:80"
+      - "443:443"
+networks:
+  test:
+    driver: overlay
